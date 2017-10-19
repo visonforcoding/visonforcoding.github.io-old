@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>程序员代码下的许豪杰(下 技术篇)</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html" rel="canonical" />
+
+        <meta name="description" content="接上篇，这一篇将从技术层面讲讲是如何实现的。阅读本文您将会了解如何用python爬取微博的评论以及如何用python word_cloud库进行数据可视化。 上一篇:程序员代码下的许豪杰 准备工作 打开微博pc...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="程序员代码下的许豪杰(下 技术篇)"/>
+<meta property="og:description" content="接上篇，这一篇将从技术层面讲讲是如何实现的。阅读本文您将会了解如何用python爬取微博的评论以及如何用python word_cloud库进行数据可视化。 上一篇:程序员代码下的许豪杰 准备工作 打开微博pc..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-08-09 23:19:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="其他"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "程序员代码下的许豪杰(下 技术篇)",
+  "headline": "程序员代码下的许豪杰(下 技术篇)",
+  "datePublished": "2017-08-09 23:19:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html",
+  "description": "接上篇，这一篇将从技术层面讲讲是如何实现的。阅读本文您将会了解如何用python爬取微博的评论以及如何用python word_cloud库进行数据可视化。 上一篇:程序员代码下的许豪杰 准备工作 打开微博pc..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">程序员代码下的许豪杰(下 技术篇)</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="三 09 八月 2017">三 09 八月 2017</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <blockquote>
+<p>接上篇，这一篇将从技术层面讲讲是如何实现的。阅读本文您将会了解如何用python爬取微博的评论以及如何用python word_cloud库进行数据可视化。</p>
+</blockquote>
+<p>上一篇:<a href="http://www.jianshu.com/p/ab49113c1fda">程序员代码下的许豪杰</a></p>
+<h2>准备工作</h2>
+<p>打开微博pc m站并找到许豪杰该条微博地址:https://m.weibo.cn/status/4132385564040383</p>
+<p><strong>为什么要用m站地址？因为m站可以直接抓取到api json数据,而pc站虽然也有api返回的是html,相比而言选取m站会省去很多麻烦</strong></p>
+<p>打开该页面，并且用chrome 的检查工具 查看network，可以获取到评论的api地址。</p>
+<p><img alt="chrome查看" src="http://upload-images.jianshu.io/upload_images/4033700-382e5a613595bc1c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<h2>数据抓取</h2>
+<p>首先观察api返回</p>
+<p><img alt="image.png" src="http://upload-images.jianshu.io/upload_images/4033700-f2aa3ddad169fe31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<p>从返回地址上可以看到可以通过参数page 改变请求的页码,并且每页都回返回总条数和总页码数。这里我决定采用<strong>多线程来抓去</strong>(其实数据量不大,也可以单线程跑)。</p>
+<h3>其中在爬取数据的时候会面临几个问题：</h3>
+<p><strong>1.存储选择</strong></p>
+<p>我这里选用了MongoDB作为数据存储，因为api通常返回的是json数据而json结构和MongoDB的存储方式可以结合的很默契，不需要经过任何处理可以直接的进行插入。</p>
+<p><strong>2.防爬虫</strong></p>
+<p>很多网站可能会做一些防爬虫的处理，面对同一个请求ip的短时间的高频率请求会进行服务隔断(直接告诉你服务不可用)，这个时候可以去网上找一些代理进行请求。</p>
+<p><strong>3.多线程的任务分配</strong></p>
+<p>采用多线程爬取你当然不能让多个线程去爬取同样的链接做别人已经做过的事情，那样多线程毫无意义。所以你需要制定一套规则，让不同线程爬取不同的链接。</p>
+<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">path</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="c1"># 爬取微博评论</span>
+<span class="c1"># m站微博地址</span>
+<span class="n">weibo_url</span> <span class="o">=</span> <span class="s1">&#39;https://m.weibo.cn/status/4132385564040383&#39;</span> 
+
+<span class="n">thread_nums</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1">#线程数</span>
+
+<span class="c1">#代理地址</span>
+<span class="n">proxies</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;http&quot;</span><span class="p">:</span> <span class="s2">&quot;http://171.92.4.67:9000&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;http&quot;</span><span class="p">:</span> <span class="s2">&quot;http://163.125.222.240:8118&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;http&quot;</span><span class="p">:</span> <span class="s2">&quot;http://121.232.145.251:9000&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;http&quot;</span><span class="p">:</span> <span class="s2">&quot;http://121.232.147.247:9000&quot;</span><span class="p">,</span>
+
+<span class="p">}</span>
+
+
+<span class="c1"># 创建 日志 对象</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+    <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> </span><span class="si">%(name)-12s</span><span class="s1"> </span><span class="si">%(levelname)-8s</span><span class="s1"> </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+
+<span class="n">mongoconn</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">mdb</span> <span class="o">=</span> <span class="n">mongoconn</span><span class="o">.</span><span class="n">data_analysis</span>
+<span class="n">das_collection</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">weibo</span>
+
+<span class="n">weiboid_reobj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*status/(\d+)&#39;</span><span class="p">,</span> <span class="n">weibo_url</span><span class="p">)</span>
+<span class="n">weibo_id</span> <span class="o">=</span> <span class="n">weiboid_reobj</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">scrapy_comments</span><span class="p">(</span><span class="n">weibo_id</span><span class="p">,</span> <span class="n">page</span><span class="p">):</span>
+    <span class="n">weibo_comment_url</span> <span class="o">=</span> <span class="s1">&#39;https://m.weibo.cn/api/comments/show?id=</span><span class="si">%s</span><span class="s1">&amp;page=</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">weibo_id</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">weibo_comment_url</span><span class="p">)</span>
+    <span class="n">res_obj</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res_obj</span>
+
+
+<span class="k">def</span> <span class="nf">import_comments</span><span class="p">(</span><span class="n">threadName</span><span class="p">,</span> <span class="n">weibo_id</span><span class="p">,</span> <span class="n">page_start</span><span class="p">,</span> <span class="n">page_end</span><span class="p">):</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;开始线程:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">threadName</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">page_start</span><span class="p">,</span> <span class="n">page_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;读取第</span><span class="si">%s</span><span class="s1">页&#39;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># continue</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">res_obj</span> <span class="o">=</span> <span class="n">scrapy_comments</span><span class="p">(</span><span class="n">weibo_id</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;该页有</span><span class="si">%s</span><span class="s1">条记录&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]))</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;读取</span><span class="si">%s</span><span class="s1">页时发生错误&#39;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">comments</span> <span class="o">=</span> <span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">comment</span> <span class="ow">in</span> <span class="n">comments</span><span class="p">:</span>
+                <span class="n">comment_text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+                    <span class="sa">r</span><span class="s1">&#39;&lt;/?\w+[^&gt;]*&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;回复@.*:&#39;</span><span class="p">,</span> <span class="n">comment_text</span><span class="p">):</span>
+                    <span class="c1"># 过滤掉回复别人的评论</span>
+                    <span class="k">continue</span>
+                <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">comment_text</span>
+                <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;weibo_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weibo_id</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;读取评论:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">das_collection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]}):</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;在mongodb中存在&#39;</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;插入记录:</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">comment</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+                        <span class="n">das_collection</span><span class="o">.</span><span class="n">insert_one</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+                <span class="k">except</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;mongodb发生错误&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;读取第</span><span class="si">%s</span><span class="s1">页时发生错误&#39;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;线程</span><span class="si">%s</span><span class="s1">结束&#39;</span> <span class="o">%</span> <span class="n">threadName</span><span class="p">)</span>
+    <span class="c1"># res_obj = scrapy_comments(weibo_id, page)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># 分配不同链接到不同的线程上去</span>
+    <span class="n">res_obj</span> <span class="o">=</span> <span class="n">scrapy_comments</span><span class="p">(</span><span class="n">weibo_id</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;ok&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">total_number</span> <span class="o">=</span> <span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;total_number&#39;</span><span class="p">]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;该条微博有:</span><span class="si">%s</span><span class="s1">条评论&#39;</span> <span class="o">%</span> <span class="n">total_number</span><span class="p">)</span>
+        <span class="n">max_page</span> <span class="o">=</span> <span class="n">res_obj</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span>
+        <span class="n">page_nums</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">max_page</span> <span class="o">/</span> <span class="n">thread_nums</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span>
+
+    <span class="c1"># print max_page</span>
+    <span class="c1"># print page_nums</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">thread_nums</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">thread_nums</span><span class="p">:</span>
+            <span class="n">page_end</span> <span class="o">=</span> <span class="n">page_nums</span> <span class="o">*</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">page_end</span> <span class="o">=</span> <span class="n">max_page</span>
+        <span class="n">page_start</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">page_nums</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">import_comments</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">i</span><span class="p">,</span> <span class="n">weibo_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">page_start</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">page_end</span><span class="p">)))</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</pre></div>
+
+
+<h2>数据整理可视化(data visualization)</h2>
+<p>运行脚本完毕，我的MongoDB得到了2万多条评论数据，接下来要做的事是对这部分数据进行提取、清洗、结构化等操作。这里顺便说明一下python 数据分析的 大致基本流程。</p>
+<p><strong>1.与外界进行交互</strong>
+这个过程包括数据的获取、读取。不管是从网络资源上爬取、还是从现有资源(各样的文件如文本、excel、数据库存储对象)</p>
+<p><strong>2.准备工作</strong>
+对数据进行清洗(cleaning)、修整(munging)、整合(combining)、规范化(normalizing)、重塑(reshaping)、切片(slicing)和切块(dicing)</p>
+<p><strong>3.转换</strong>
+对数据集做一些数学和统计运算产生新的数据集</p>
+<p><strong>4.建模和计算</strong>
+将数据跟统计模型、机器学习算法或其他计算工具联系起来</p>
+<p><strong>5.展示</strong>
+创建交互式的或静态的图片或文字摘要</p>
+<p>下面我们来进行2、3及5的工作:</p>
+<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="c1"># 分词库</span>
+<span class="c1"># from snownlp import SnowNLP</span>
+<span class="kn">import</span> <span class="nn">jieba</span>
+<span class="kn">import</span> <span class="nn">uniout</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">OrderedDict</span>
+<span class="c1"># 词语云 文本统计可视化库</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+
+
+<span class="n">mongoconn</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="mi">27017</span><span class="p">)</span>
+<span class="n">mdb</span> <span class="o">=</span> <span class="n">mongoconn</span><span class="o">.</span><span class="n">data_analysis</span>
+<span class="n">das_collection</span> <span class="o">=</span> <span class="n">mdb</span><span class="o">.</span><span class="n">weibo</span>
+
+
+<span class="n">total_counts</span> <span class="o">=</span> <span class="n">das_collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+
+<span class="c1"># random_int = random.randint(0, total_counts - 1)</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">das_collection</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">docs</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">words_counts</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">doc</span>
+    <span class="n">comment_text</span> <span class="o">=</span> <span class="n">doc</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">comment_text</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">jieba</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">comment_text</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">words_counts</span><span class="p">:</span>
+            <span class="n">words_counts</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">words_counts</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words_counts</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">words_counts</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">words_counts</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+
+<span class="c1"># print words_counts.items()</span>
+<span class="c1">#注意要让中文不乱码要指定中文字体</span>
+<span class="c1">#fit_words 接收参数是dict  eg:{&#39;你&#39;:333,&#39;好&#39;:23}  文字:出现次数</span>
+<span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span>
+    <span class="n">font_path</span><span class="o">=</span><span class="s1">&#39;/Users/cwp/font/msyh.ttf&#39;</span><span class="p">,</span>
+    <span class="n">background_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit_words</span><span class="p">(</span><span class="n">words_counts</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+
+<p>介绍下以上代码：
+我们主要用到了2个工具，jieba和word_cloud。前者对中文进行分词后者图形化展示词语的出现频率。
+众所周知，中文系的语言处理恐怕是最难的自然语言处理(NLP)的语种。就基本的分词而言都是一项比较困难的工作,(英语句子中每个单词都是有空格分开的，而中文是由单个字组成词连接成串组成句).
+举个例子,请用“孩提”造句,"那个男孩提交完代码就下班了"。如果人工分词，可以知道"男孩"和"提交"应该是分开的2个词，<strong>但是对于机器而言，要辨别"提"应该与"男"还是"交"进行组词就很难办了</strong>。要想机器能够更精确的辨别这类问题，就需要让机器不停学习，让它知道这种情况该这么分而不是那么分。研究中文自然语言处理将是一个长久而大的工程，对于分析数据(我们不是要研究自然语言处理😏)，这里就借助jieba这个库进行工作了.</p>
+<p>对于word_cloud,图形化文本统计，网上有不少的博文都贴了代码，但我想说的是我不了解它们是不是真的运行出了结果。因为fit_words 这个函数接收的是dict而不是list，官方文档和函数doc其实写错了,在github上有披露。</p>
+<p>最后得到结果:</p>
+<p><img alt="结果" src="http://upload-images.jianshu.io/upload_images/4033700-dfbee241840ea23e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
+<h2>一些用到的工具</h2>
+<p>1.<a href="https://github.com/amueller/word_cloud">word_cloud A little word cloud generator in Python</a></p>
+<p>2.<a href="https://github.com/fxsjy/jieba">jieba 结巴中文分词</a></p>
+<p>3.<a href="http://docs.python-requests.org/en/master/">Requests is the only Non-GMO HTTP library for Python, safe for human consumption.</a></p>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=程序员代码下的许豪杰(下 技术篇)&amp;url=/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/cheng-xu-yuan-dai-ma-xia-de-xu-hao-jie-xia-ji-zhu-pian.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>Quick tips for using Pandas with MongoDB</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/quick-tips-for-using-pandas-with-mongodb.html" rel="canonical" />
+
+        <meta name="description" content="数据存储在MongoDB，如何对它们进行分析？ 这篇文章将会细讲以下两个方面: 1.如何更高效地将数组数据从MongoDB导入到Pandas 2.利用MongoDB的查询和聚合过滤出你所需要的数据到Pandas非常的重要和有用。 对与初学者：什么是pandas...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="Quick tips for using Pandas with MongoDB"/>
+<meta property="og:description" content="数据存储在MongoDB，如何对它们进行分析？ 这篇文章将会细讲以下两个方面: 1.如何更高效地将数组数据从MongoDB导入到Pandas 2.利用MongoDB的查询和聚合过滤出你所需要的数据到Pandas非常的重要和有用。 对与初学者：什么是pandas..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/quick-tips-for-using-pandas-with-mongodb.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-07-30 10:32:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="python"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "Quick tips for using Pandas with MongoDB",
+  "headline": "Quick tips for using Pandas with MongoDB",
+  "datePublished": "2017-07-30 10:32:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/quick-tips-for-using-pandas-with-mongodb.html",
+  "description": "数据存储在MongoDB，如何对它们进行分析？ 这篇文章将会细讲以下两个方面: 1.如何更高效地将数组数据从MongoDB导入到Pandas 2.利用MongoDB的查询和聚合过滤出你所需要的数据到Pandas非常的重要和有用。 对与初学者：什么是pandas..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">Quick tips for using Pandas with MongoDB</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="日 30 七月 2017">日 30 七月 2017</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h1>数据存储在MongoDB，如何对它们进行分析？</h1>
+<p><em>这篇文章将会细讲以下两个方面:</em></p>
+<p>1.如何更高效地将数组数据从MongoDB导入到Pandas</p>
+<p>2.利用MongoDB的查询和聚合过滤出你所需要的数据到Pandas非常的重要和有用。</p>
+<h2>对与初学者：什么是pandas</h2>
+<p><img alt="pandas" src="images/2017-07-30-10-43-37.png"></p>
+<p>从<a href="http://pandas.pydata.org/pandas-docs/stable/">它们的文档</a>来看:</p>
+<p>Pandas是一个提供快速、灵活、生动的数据结构设计使得处理"relational"和"labeled"数据都能容易和直观的python包。</p>
+<p>它旨在成为在Python中进行实际的现实世界数据分析的基础高层次构建模块。此外，它有更广泛的目标，成为任何语言提供的最强大和最灵活的开源数据分析/操纵工具。它已经很好地实现了这一目标。</p>
+<h2>pandas 很适合许多不同种类的数据：</h2>
+<ul>
+<li>具有异类型列的表格数据，如SQL表或Excel电子表格中所示</li>
+<li>有序和无序（不一定是固定频率）的时间序列数据。</li>
+<li>具有行和列标签的任意矩阵数据（均匀类型或异构）</li>
+<li>任何其他形式的观察/统计数据集。数据实际上根本不需要被标记为放在熊猫数据结构中</li>
+</ul>
+<h2>Pandas 与 R 的异同</h2>
+<p><em>这个话题上互联网上有很多材料，但是这里有一些更好的总结:</em></p>
+<ul>
+<li>
+<p>pandas 和R都用于统计和数字分析，包括导入数据和绘图的能力。</p>
+</li>
+<li>
+<p>pandas和R都以称为dataframe的二维空间为基础对象。</p>
+</li>
+<li>
+<p>R 是具有自己的语言和模块生态系统的自己的环境。</p>
+</li>
+<li>
+<p>pandas 是您导入python的模块，所以语言是python，生态系统是python。</p>
+</li>
+<li>
+<p>R 有一个更广泛的本机统计功能。</p>
+</li>
+<li>
+<p>pandas 从python面向对象的环境中获益，还可以轻松集成更多的“对等”模块和功能</p>
+</li>
+<li>
+<p>python和r都有MongoDB的驱动程序/ API</p>
+</li>
+</ul>
+<h2>如何从MongoDB获取数据到Pandas</h2>
+<p>这是“经典”5行，将产生一个dataframe。没有参数的find(）本质上是select * from myCollection;所有的字段，没有过滤。 python原生函数list(）用于调用find()返回的游标（一个可迭代的），直到cursor完成：</p>
+<div class="highlight"><pre><span></span>  <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+  <span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
+  <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">()</span>
+  <span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">sourceDatabase</span>
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">()))</span>
+</pre></div>
+
+
+<p>pandas 在摄取数据方面非常灵活，而MongoDB python驱动程序将产生丰富的类型（即真实日期，真正的数组等，而不是字符串表示或不透明的blob），所以几乎所有在myCollection中的任何东西都将被削弱数据帧。所以在行动中，5-Liner运行这个数据：</p>
+<div class="highlight"><pre><span></span>  db.myCollection.insert（<span class="o">{</span>“a”：1，“b”：2，“c”：3<span class="o">}</span>）
+  db.myCollection.insert（<span class="o">{</span>“a”：4，“b”：5，“c”：6<span class="o">}</span>）
+</pre></div>
+
+
+<p>将产生此输出：</p>
+<div class="highlight"><pre><span></span>                          _id    a    b    c
+  <span class="m">0</span>  5804e627119c0d2c13c0a7e1  <span class="m">1</span>.0  <span class="m">2</span>.0  <span class="m">3</span>.0
+  <span class="m">1</span>  5804e627119c0d2c13c0a7e2  <span class="m">4</span>.0  <span class="m">5</span>.0  <span class="m">6</span>.0
+</pre></div>
+
+
+<p><em>请注意，特殊的MongoDB唯一文档标识符_id也将被带入框架</em>,从返回的数据集中可以看到简单的技术;我们稍后会探讨一下。如前所述，pandas将正确地遏制复杂的数据，包括数组中的混合类型（以下示例中第二个插入中的字段f）：</p>
+<div class="highlight"><pre><span></span>  db.myCollection.insert<span class="o">({</span><span class="s2">&quot;a&quot;</span>:<span class="s2">&quot;hello&quot;</span>, <span class="s2">&quot;b&quot;</span>: datetime.datetime.now<span class="o">()</span>, <span class="s2">&quot;c&quot;</span>: <span class="o">{</span><span class="s2">&quot;d&quot;</span>:<span class="s2">&quot;AA&quot;</span>,<span class="s2">&quot;e&quot;</span>:<span class="s2">&quot;BB&quot;</span><span class="o">}</span>, <span class="s2">&quot;f&quot;</span>: <span class="o">[</span><span class="m">2</span>,3,4<span class="o">]})</span>
+
+  db.myCollection.insert<span class="o">({</span><span class="s2">&quot;a&quot;</span>:<span class="s2">&quot;goodbye&quot;</span>, <span class="s2">&quot;c&quot;</span>: <span class="o">{</span><span class="s2">&quot;e&quot;</span>:<span class="s2">&quot;WW&quot;</span><span class="o">}</span>, <span class="s2">&quot;f&quot;</span>: <span class="o">[</span><span class="m">0</span>, <span class="s2">&quot;grimble&quot;</span>, datetime.datetime.now<span class="o">()</span>, <span class="m">7</span>.7 <span class="o">]})</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>                          _id        a                       b
+  <span class="m">0</span>  5804e758119c0d2c13c0a7e5    hello <span class="m">2016</span>-10-17 <span class="m">14</span>:59:36.029
+  <span class="m">1</span>  5804e758119c0d2c13c0a7e6  goodbye
+
+                              c                                         f
+  <span class="m">0</span>  <span class="o">{</span>u<span class="s1">&#39;e&#39;</span>: u<span class="s1">&#39;BB&#39;</span>, u<span class="s1">&#39;d&#39;</span>: u<span class="s1">&#39;AA&#39;</span><span class="o">}</span>                             <span class="o">[</span><span class="m">2</span>.0, <span class="m">3</span>.0, <span class="m">4</span>.0<span class="o">]</span>
+  <span class="m">1</span>               <span class="o">{</span>u<span class="s1">&#39;e&#39;</span>: u<span class="s1">&#39;WW&#39;</span><span class="o">}</span>  <span class="o">[</span><span class="m">0</span>.0, grimble, <span class="m">2016</span>-10-17 <span class="m">14</span>:59:36.107000, <span class="m">7</span>.7<span class="o">]</span>
+</pre></div>
+
+
+<blockquote>
+<p>虽然5-Liner强调了易于集成，但它回避了一个重要的问题：如何最好地处理MongoDB中的数组。</p>
+</blockquote>
+<h2>pandas和dataframe 创建的一些背景</h2>
+<p>仅仅支持一点点，大多数pandas的用例围绕创建数字矩阵，通常以数字列的形式提供。数组的数组真的是最容易构造的，并且很好地驱动动态数据帧创建（即数组的长度驱动帧大小），尽管像所有基于整数偏移的寻址一样，更大的数据集或缺少的值可能会有点麻烦来处理与（如CSV文件）：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">[</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
+      <span class="p">[</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+      <span class="p">[</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+  <span class="p">]</span>
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>      <span class="m">0</span>   <span class="m">1</span>   <span class="m">2</span>     <span class="m">3</span>
+  <span class="m">0</span>   <span class="m">4</span>   <span class="m">5</span>   <span class="m">6</span>   <span class="m">7</span>.0
+  <span class="m">1</span>   <span class="m">7</span>   <span class="m">8</span>   <span class="m">9</span>  <span class="m">10</span>.0
+  <span class="m">2</span>  <span class="m">10</span>  <span class="m">11</span>  <span class="m">12</span>   NaN
+</pre></div>
+
+
+<p>Arrays of key:简单标量的值结构使得field管理变得更容易，实际上是传统RDBMS平台（考虑到ResultSet的游标）的主要表现形式：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span><span class="mi">7</span><span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="mi">12</span> <span class="p">}</span>
+  <span class="p">]</span>
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>       a   b   c     d
+  <span class="m">0</span>  <span class="m">4</span>.0   <span class="m">5</span>   <span class="m">6</span>   <span class="m">7</span>.0
+  <span class="m">1</span>  <span class="m">7</span>.0   <span class="m">8</span>   <span class="m">9</span>  <span class="m">10</span>.0
+  <span class="m">2</span>  NaN  <span class="m">11</span>  <span class="m">12</span>   NaN
+</pre></div>
+
+
+<p>Combining key:value是数组，但是，产生一个有趣的结果:</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="p">}</span>
+  <span class="p">]</span>
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>                a
+  <span class="m">0</span>  <span class="o">[</span><span class="m">4</span>, <span class="m">5</span>, <span class="m">6</span>, <span class="m">7</span><span class="o">]</span>
+  <span class="m">1</span>    <span class="o">[</span><span class="m">8</span>, <span class="m">9</span>, <span class="m">10</span><span class="o">]</span>
+  <span class="m">2</span>      <span class="o">[</span><span class="m">11</span>, <span class="m">12</span><span class="o">]</span>
+</pre></div>
+
+
+<p>数组不会动态地驱动列数。 相反，只有一列存在类型数组！ 这通常不是我们寻求的结构。
+在MongoDB中，存储数组数组通常是非常有利的。 但是5-Liner中方法遇到了同样的问题：</p>
+<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">]},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+      <span class="p">]</span>
+  <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">()))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>                          _id                     a
+  <span class="m">0</span>  58056115119c0d2c13c0a7e9  <span class="o">[</span><span class="m">4</span>.0, <span class="m">5</span>.0, <span class="m">6</span>.0, <span class="m">7</span>.0<span class="o">]</span>
+  <span class="m">1</span>  58056115119c0d2c13c0a7ea      <span class="o">[</span><span class="m">8</span>.0, <span class="m">9</span>.0, <span class="m">10</span>.0<span class="o">]</span>
+  <span class="m">2</span>  58056115119c0d2c13c0a7eb          <span class="o">[</span><span class="m">11</span>.0, <span class="m">12</span>.0<span class="o">]</span>
+</pre></div>
+
+
+<h2>从MongoDB优化数组的消耗</h2>
+<p>最大化将数据从MongoDB数组移动到熊猫动态列的实用性的技术很简单：而不是在find（）上调用list（），迭代游标并构建至少一个值列表（这将是一个数组列表 ），可选的一个用于列标签，另一个用于索引。 开始简单（没有list推导）：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">():</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>        <span class="m">0</span>     <span class="m">1</span>     <span class="m">2</span>    <span class="m">3</span>
+  <span class="m">0</span>   <span class="m">4</span>.0   <span class="m">5</span>.0   <span class="m">6</span>.0  <span class="m">7</span>.0
+  <span class="m">1</span>   <span class="m">8</span>.0   <span class="m">9</span>.0  <span class="m">10</span>.0  NaN
+  <span class="m">2</span>  <span class="m">11</span>.0  <span class="m">12</span>.0   NaN  NaN
+</pre></div>
+
+
+<p>注意它不再只是列“a”; 列由数组a的大小动态驱动。 另外，因为我们正在显式地构建值数组（同样是一个数组列表），所以_id不会被拖入，pandas会自动将NaN分配给短数组。
+每个文档通常都会具有与值数组相关联的某种标签。 我们补充说，作为字段n：</p>
+<div class="highlight"><pre><span></span>  <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">}</span>
+  <span class="p">]</span>
+  <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">seriesLbls</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">():</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">seriesLbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">seriesLbls</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>          <span class="m">0</span>     <span class="m">1</span>     <span class="m">2</span>    <span class="m">3</span>
+  foo   <span class="m">4</span>.0   <span class="m">5</span>.0   <span class="m">6</span>.0  <span class="m">7</span>.0
+  bar   <span class="m">8</span>.0   <span class="m">9</span>.0  <span class="m">10</span>.0  NaN
+  baz  <span class="m">11</span>.0  <span class="m">12</span>.0   NaN  NaN
+</pre></div>
+
+
+<p>请注意，0,1,2已被foo，bar和baz替代。 应该清楚的是，如果需要，可以使用cc ['_ id']，而不是使用cc ['n']创建索引。 在for循环中构建多个数组比使用列表推导更加清晰。
+数据也从MongoDB流入大熊猫用作索引。 我们为每个记录添加一个日期，并使用它而不是名称:</p>
+<div class="highlight"><pre><span></span>  <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span> <span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+  <span class="p">]</span>
+  <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">dates</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">():</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+
+  <span class="n">didx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DatetimeIndex</span><span class="p">(</span><span class="n">dates</span><span class="p">)</span>  <span class="c1"># not strictly necessary</span>
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">didx</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>                 <span class="m">0</span>     <span class="m">1</span>     <span class="m">2</span>    <span class="m">3</span>
+  <span class="m">2016</span>-07-01   <span class="m">4</span>.0   <span class="m">5</span>.0   <span class="m">6</span>.0  <span class="m">7</span>.0
+  <span class="m">2016</span>-08-01   <span class="m">8</span>.0   <span class="m">9</span>.0  <span class="m">10</span>.0  NaN
+  <span class="m">2016</span>-09-01  <span class="m">11</span>.0  <span class="m">12</span>.0   NaN  NaN
+</pre></div>
+
+
+<p>dataframe构造函数将接受datetime对象的常规数组作为索引的值，但是为了完整性，我们将显示一个DatetimeIndex对象的显式构造。
+最后，有几种方法可以制作列标签，使dataframe不错，完整。 在这里，我们只需要查找最长的数组来驱动列名C0到Cn的生成（通过list comprehension）：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">seriesLbls</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="nb">max</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">():</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">:</span>
+          <span class="nb">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">seriesLbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">seriesLbls</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span> <span class="s2">&quot;C&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">)])</span>
+
+  <span class="k">print</span> <span class="n">df</span>
+  <span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>         C0    C1    C2   C3
+  foo   <span class="m">4</span>.0   <span class="m">5</span>.0   <span class="m">6</span>.0  <span class="m">7</span>.0
+  bar   <span class="m">8</span>.0   <span class="m">9</span>.0  <span class="m">10</span>.0  NaN
+  baz  <span class="m">11</span>.0  <span class="m">12</span>.0   NaN  NaN
+
+      foo   bar   baz
+  C0  <span class="m">4</span>.0   <span class="m">8</span>.0  <span class="m">11</span>.0
+  C1  <span class="m">5</span>.0   <span class="m">9</span>.0  <span class="m">12</span>.0
+  C2  <span class="m">6</span>.0  <span class="m">10</span>.0   NaN
+  C3  <span class="m">7</span>.0   NaN   NaN
+</pre></div>
+
+
+<p>我们在这里显示标称和转置（df.T）dataframe。
+矩阵</p>
+<p>在dataframe之外，矩阵通常被实现为数组。 这个实现可以轻松地转换为MongoDB。 在这里，我们正在存储两个文档，每个文档具有3x3矩阵。 这是与上述示例略有不同的数据设计，因为矩阵是一个文档中的单个字段，而不是每个行作为2个或更多文档中的数组承载：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span> <span class="p">]</span> <span class="p">}</span>
+        <span class="p">,{</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">[</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span> <span class="p">]</span> <span class="p">}</span>
+  <span class="p">]</span>
+
+  <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">drop</span><span class="p">()</span>
+  <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<p>与常规向量一样，只需将MongoDB文档拖放到框架中即可产生您可能不想要的表示。</p>
+<div class="highlight"><pre><span></span>  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">()))</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>                          _id name                                       v
+  <span class="m">0</span>  587115a8ed58db9467d94d34    A       <span class="o">[[</span><span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span><span class="o">]</span>, <span class="o">[</span><span class="m">4</span>, <span class="m">5</span>, <span class="m">6</span><span class="o">]</span>, <span class="o">[</span><span class="m">7</span>, <span class="m">8</span>, <span class="m">9</span><span class="o">]]</span>
+  <span class="m">1</span>  587115a8ed58db9467d94d35    B      <span class="o">[[</span><span class="m">2</span>, <span class="m">3</span>, <span class="m">4</span><span class="o">]</span>, <span class="o">[</span><span class="m">5</span>, <span class="m">6</span>, <span class="m">4</span><span class="o">]</span>, <span class="o">[</span><span class="m">8</span>, <span class="m">9</span>, <span class="m">10</span><span class="o">]]</span>
+</pre></div>
+
+
+<p>幸运的是，pandas适用于常规数组，因此迭代地添加简单数组将产生我们寻求的3x3结构。 在下面的例子中，我们使用find_one方法只返回一个名为“B”的文档：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">item</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find_one</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;B&quot;</span><span class="p">})</span>
+  <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;v&#39;</span><span class="p">]:</span>   <span class="c1"># item[&#39;v&#39;] is array of array, so row is array</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+  <span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>     <span class="m">0</span>  <span class="m">1</span>   <span class="m">2</span>
+  <span class="m">0</span>  <span class="m">2</span>  <span class="m">3</span>   <span class="m">4</span>
+  <span class="m">1</span>  <span class="m">5</span>  <span class="m">6</span>   <span class="m">4</span>
+  <span class="m">2</span>  <span class="m">8</span>  <span class="m">9</span>  <span class="m">10</span>
+</pre></div>
+
+
+<h2>不要忘记MongoDB的力量</h2>
+<p>开发人员和分析师经常采取一种将数据拖出数据库（MongoDB或其他方式）并加载一个非常大的数据帧的方法 - 即使它们只需要一小部分数据。很多时候这是因为：
+过滤或聚合功能需要在阵列上工作，熊猫环境提供数据提供者中不存在的功能
+大熊猫环境更加优越或更方便
+以上所有
+但是很明显，非常希望不必在网络上移动不必要的数据，并尽可能地创建大型数据帧。
+上面的例子集中在将数据从MongoDB有效地移动到数据帧中，但没有探索过滤和聚合。下面是一个强大的MongoDB聚合框架如何被带入的例子。这些过滤命令在服务器端以索引优化的方式执行，大大减少了填充数据帧的材料数量，并提高了性能：</p>
+<div class="highlight"><pre><span></span>  <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">seriesLbls</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="nb">max</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
+  <span class="c1">#  First, only get things after 2016-07-15.  Typically this would be on an </span>
+  <span class="c1">#  indexed field and will rapidly cut down the material to a fraction</span>
+  <span class="c1">#  of what might be stored in the DB.  &quot;First cut&quot; filtering on dates, </span>
+  <span class="c1">#  portfolios, owners, compute run ids, etc. is a very important and useful </span>
+  <span class="c1">#  capability.</span>
+  <span class="c1">#</span>
+  <span class="p">{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">15</span><span class="p">)}}}</span>
+  <span class="c1">#  Next, compute stdDevPop of the array.  MongoDB offers powerful array</span>
+  <span class="c1">#  handling functions:</span>
+  <span class="p">,{</span><span class="s2">&quot;$addFields&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sdev&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$stdDevPop&quot;</span><span class="p">:</span> <span class="s2">&quot;$a&quot;</span><span class="p">}}}</span>
+
+  <span class="c1">#  Next, only permit those items where stdDevPop is &lt;.75 to come through:</span>
+  <span class="p">,{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sdev&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$lt&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">}}}</span>
+  <span class="p">]):</span>
+      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">:</span>
+          <span class="nb">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+      <span class="n">seriesLbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">seriesLbls</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span> <span class="s2">&quot;C&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">)])</span>
+  <span class="k">print</span> <span class="n">df</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>       C0  C1
+  baz  <span class="m">11</span>  <span class="m">12</span>
+</pre></div>
+
+
+<p>如果您注释掉最后一个match，您将看到两个项目将流过dataframe。 第三个仍然不存在，因为它被日期的第一个$match表达式滤除。.</p>
+<div class="highlight"><pre><span></span>  <span class="c1">#  Next, only permit those items where stdDevPop is &lt;.75 to come through:</span>
+  <span class="c1"># ,{&quot;$match&quot;: {&quot;sdev&quot;: {&quot;$lt&quot;: 0.75}}}   # commented out</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>       C0  C1    C2
+  bar   <span class="m">8</span>   <span class="m">9</span>  <span class="m">10</span>.0
+  baz  <span class="m">11</span>  <span class="m">12</span>   NaN
+</pre></div>
+
+
+<p>有时您不会将数据组织到数组中，而是会发现跨文档分散的值。 不要更pandas/数据框逻辑，而是使用MongoDB来构建数组。 我们将使用上面的数据将其分解成单个文档，使用标量字段v来承载（原始）数组的每个元素来降低这种情况。 然后，我们将使用$group阶段将其重新组合起来，构建一个数组，并将结果传递给与之前相同的代码逻辑：</p>
+<div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s2">&quot;n&quot;</span><span class="p">:</span> <span class="s2">&quot;baz&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+<span class="p">]</span>
+<span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">seriesLbls</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="nb">max</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
+<span class="p">{</span><span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$n&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$push&quot;</span><span class="p">:</span> <span class="s2">&quot;$v&quot;</span><span class="p">}}}</span>
+<span class="p">]):</span>
+    <span class="k">print</span> <span class="n">cc</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">:</span>
+        <span class="nb">max</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+    <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">])</span>
+    <span class="n">seriesLbls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cc</span><span class="p">[</span><span class="s1">&#39;_id&#39;</span><span class="p">])</span>
+
+<span class="k">print</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">seriesLbls</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span> <span class="s2">&quot;C&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">)])</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>     C0  C1    C2   C3
+baz  <span class="m">11</span>  <span class="m">12</span>   NaN  NaN
+bar   <span class="m">8</span>   <span class="m">9</span>  <span class="m">10</span>.0  NaN
+foo   <span class="m">4</span>   <span class="m">5</span>   <span class="m">6</span>.0  <span class="m">7</span>.0
+</pre></div>
+
+
+<p>上面的粗体代码将从每个文档中的单个值v创建一个数组，按_id分组。
+当然，我们可以从$ group操作符之前的前一个示例中添加过滤器，以减少传递给$ group的资料量，稍后再对$ stdDevPop进行过滤：</p>
+<div class="highlight"><pre><span></span>  <span class="k">for</span> <span class="n">cc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">aggregate</span><span class="p">([</span>
+  <span class="p">{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">15</span><span class="p">)}}}</span>
+  <span class="p">,{</span><span class="s2">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;_id&quot;</span><span class="p">:</span> <span class="s2">&quot;$n&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$push&quot;</span><span class="p">:</span> <span class="s2">&quot;$v&quot;</span><span class="p">}}}</span>
+  <span class="p">,{</span><span class="s2">&quot;$addFields&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sdev&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$stdDevPop&quot;</span><span class="p">:</span> <span class="s2">&quot;$a&quot;</span><span class="p">}}}</span>
+  <span class="p">,{</span><span class="s2">&quot;$match&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;sdev&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;$lt&quot;</span><span class="p">:</span> <span class="mf">0.75</span><span class="p">}}}</span>
+  <span class="p">]):</span>
+</pre></div>
+
+
+<p>一般来说，策略应该先过滤，然后进行操作。
+处理非常大的数据集时的最后提示</p>
+<p>5-Liner的简单性隐藏了一个潜在的问题，数百万或数十亿的文档从数据库中拉出。 list（）运算符将导致创建一个巨大的数据结构，只能作为临时构造函数传递给DataFrame，然后构建基本上相同的巨大数据结构：</p>
+<div class="highlight"><pre><span></span>  <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">()))</span>
+</pre></div>
+
+
+<p>有许多方法来避免这个问题，但是大多数方法围绕从小组输入记录创建小帧，然后在最后连接帧。 这是一个来自stackoverflow的例子：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">iterator2dataframes</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span><span class="n">chunk_size</span><span class="p">:</span><span class="nb">int</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Turn an iterator into multiple small pandas.DataFrame</span>
+<span class="sd">  This is a balance between memory and efficiency</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">frames</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">iterator</span><span class="p">):</span>
+    <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">chunk_size</span> <span class="o">==</span> <span class="n">chunk_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">))</span>
+      <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">if</span> <span class="n">records</span><span class="p">:</span>
+    <span class="n">frames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">))</span>
+  <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">iterator2dataframe</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">myCollection</span><span class="o">.</span><span class="n">find</span><span class="p">(),</span> <span class="mi">10000</span><span class="p">)</span>
+</pre></div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=Quick tips for using Pandas with MongoDB&amp;url=/quick-tips-for-using-pandas-with-mongodb.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/quick-tips-for-using-pandas-with-mongodb.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/quick-tips-for-using-pandas-with-mongodb.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
