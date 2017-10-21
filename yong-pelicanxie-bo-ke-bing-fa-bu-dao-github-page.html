@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 
-  <title>用pelican些博客并发布到github-page</title>
+  <title>用pelican写博客并发布到github-page</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -48,7 +48,7 @@
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="麦田麦穗"/>
-<meta property="og:title" content="用pelican些博客并发布到github-page"/>
+<meta property="og:title" content="用pelican写博客并发布到github-page"/>
 <meta property="og:description" content="作为程序员写博客记笔记是一件很普遍和有用的事，而我们习惯了md写文档，下面介绍一款用md写博客的工具 功能特点 多主题选择，可自定义主题 保留md 纯静态 市面上其实有hexo Jekyll,有相同的功能。为什么我选择pelican? 因为pelicam 基于..."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/yong-pelicanxie-bo-ke-bing-fa-bu-dao-github-page.html"/>
@@ -65,8 +65,8 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "用pelican些博客并发布到github-page",
-  "headline": "用pelican些博客并发布到github-page",
+  "name": "用pelican写博客并发布到github-page",
+  "headline": "用pelican写博客并发布到github-page",
   "datePublished": "2017-10-20 12:42:00+08:00",
   "dateModified": "",
   "author": {
@@ -110,7 +110,7 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">用pelican些博客并发布到github-page</h1>
+        <h1 class="post-title">用pelican写博客并发布到github-page</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/visonforcoding.html">Visonforcoding</a>
@@ -139,12 +139,92 @@
 <li>纯静态</li>
 </ul>
 <p>市面上其实有hexo Jekyll,有相同的功能。为什么我选择pelican? 因为pelicam 基于 <em>python</em> 。其他的hexo 基于nodejs，Jekyll貌似是ruby.</p>
-<h2>安装</h2>
+<h2>安装使用</h2>
+<h3>安装</h3>
+<div class="highlight"><pre><span></span> pip install pelican markdown
+ sudo -H pip install pelican markdown <span class="c1">##mac 推荐</span>
+</pre></div>
+
+
+<h3>创建项目</h3>
+<div class="highlight"><pre><span></span>mkdir -p ~/projects/yoursite  <span class="c1">##创建你的项目目录</span>
+<span class="nb">cd</span> ~/projects/yoursite
+
+pelican-quickstart  <span class="c1">##快速开始命令  完成创建</span>
+</pre></div>
+
+
+<h3>写一篇文章</h3>
+<div class="highlight"><pre><span></span><span class="nb">cd</span> content
+code hello-world.md  <span class="c1">## 用vs-code创建md并打开 我设置了cmd启动vscode</span>
+</pre></div>
+
+
+<p>写入以下内容</p>
+<div class="highlight"><pre><span></span>Title: hello world
+Date: 2010-12-03 10:20
+Category: Review
+
+hello,world
+</pre></div>
+
+
+<h3>生成静态文件</h3>
+<div class="highlight"><pre><span></span>pelican content
+</pre></div>
+
+
+<h3>预览</h3>
+<div class="highlight"><pre><span></span>cd output
+python -m pelican.server
+</pre></div>
+
+
+<p>在浏览器上查看 http://localhost:8000/</p>
+<h2>安装主题</h2>
+<p>可以从<a href="https://github.com/getpelican/pelican-themes">https://github.com/getpelican/pelican-themes</a> 选择你喜欢的主题</p>
+<div class="highlight"><pre><span></span>pelican-themes -l <span class="c1">#查看已安装的主题</span>
+pelican-themes --install ~/Dev/Python/pelican-themes/notmyidea-cms --verbos <span class="c1">##从该路径安装主题</span>
+pelican-themes --remove two-column <span class="c1">##删除主题</span>
+pelican-themes --symlink ~/Dev/Python/pelican-themes/two-column <span class="c1">##symlink 安装 很适用于开发主题</span>
+</pre></div>
+
+
+<p>我fork了官方的一个主题并进行修改地址如下<a href="git@github.com:visonforcoding/attila.git">git@github.com:visonforcoding/attila.git</a></p>
+<h2>配置</h2>
+<div class="highlight"><pre><span></span><span class="n">THEME</span> <span class="o">=</span> <span class="s2">&quot;attila&quot;</span>
+
+<span class="n">COLOR_SCHEME_CSS</span> <span class="o">=</span> <span class="s1">&#39;monokai.css&#39;</span>  <span class="c1">##设置代码高亮样式</span>
+
+<span class="n">DISQUS_SITENAME</span> <span class="o">=</span> <span class="s2">&quot;your-domain&quot;</span>  <span class="c1">##disqus 域名</span>
+</pre></div>
+
+
+<h3>发布到github page</h3>
+<p>首先你需要一个github page repository,具体参考官方文档<a href="https://pages.github.com/">https://pages.github.com/</a> 写的非常详细</p>
+<p>这里主要介绍如何将生产的output 发布到你的github repository,其实官方有提供一个ghp-import,但我觉得与自己想要的并不太一样，因此还是按照自己的方式来。原理就是利用fabric 将output push 到github.修改fabfile.py我的配置如下：</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">gh_pages</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Publish to GitHub Pages&quot;&quot;&quot;</span>
+    <span class="c1"># rebuild()</span>
+    <span class="c1"># local(&quot;ghp-import -b {github_pages_branch} {deploy_path} -p&quot;.format(**env))</span>
+    <span class="n">local</span><span class="p">(</span><span class="s2">&quot;pelican content&quot;</span><span class="p">)</span>
+    <span class="n">local</span><span class="p">(</span><span class="s2">&quot;cd content &amp;&amp; git add . &amp;&amp; git commit -m &#39;update md&#39; &amp;&amp; git push origin master &amp;&amp; cd ../&quot;</span><span class="p">)</span>
+    <span class="n">local</span><span class="p">(</span><span class="s2">&quot;cd output &amp;&amp; git add . &amp;&amp; git commit -m &#39;update blog&#39; &amp;&amp; git push origin master &amp;&amp; cd ../&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>修改 gh_pages 方法，我这里有2个git commit 和push  ,原因是我想把content 的md提交到github 保存。修改完之后执行fab命令即可将content push到md repository将content push到page repository</p>
+<div class="highlight"><pre><span></span>fab gh_pages
+</pre></div>
+
+
+<p>访问 youdomian.github.io  我的地址 <a href="https://visonforcoding.github.io/">https://visonforcoding.github.io/</a></p>
+<p><img alt="image.png" src="http://upload-images.jianshu.io/upload_images/4033700-307543c6b1150521.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"></p>
             </section>
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=用pelican些博客并发布到github-page&amp;url=/yong-pelicanxie-bo-ke-bing-fa-bu-dao-github-page.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=用pelican写博客并发布到github-page&amp;url=/yong-pelicanxie-bo-ke-bing-fa-bu-dao-github-page.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
                     <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/yong-pelicanxie-bo-ke-bing-fa-bu-dao-github-page.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
