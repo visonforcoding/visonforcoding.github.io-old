@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>funkload性能测试</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/funkloadxing-neng-ce-shi.html" rel="canonical" />
+
+        <meta name="description" content="安装 我试了在MacOS下和centos下用常规方法： pip install funkload 均告诉我失败 Google一番 按stackoverflow上说的 sudo -H pip install -i...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="funkload性能测试"/>
+<meta property="og:description" content="安装 我试了在MacOS下和centos下用常规方法： pip install funkload 均告诉我失败 Google一番 按stackoverflow上说的 sudo -H pip install -i..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/funkloadxing-neng-ce-shi.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-12-26 13:45:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="其他"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "funkload性能测试",
+  "headline": "funkload性能测试",
+  "datePublished": "2017-12-26 13:45:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/funkloadxing-neng-ce-shi.html",
+  "description": "安装 我试了在MacOS下和centos下用常规方法： pip install funkload 均告诉我失败 Google一番 按stackoverflow上说的 sudo -H pip install -i..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">funkload性能测试</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="二 26 十二月 2017">二 26 十二月 2017</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <h2>安装</h2>
+<p>我试了在MacOS下和centos下用常规方法：</p>
+<div class="highlight"><pre><span></span>pip install funkload
+</pre></div>
+
+
+<p>均告诉我失败</p>
+<p><img alt="2017-12-26-15-31-13" src="http://img.rc5j.cn/2017-12-26-15-31-13.png"></p>
+<p>Google一番 按stackoverflow上说的</p>
+<div class="highlight"><pre><span></span>sudo -H pip install -i https://pypi.python.org/simple/ --trusted-host pypi.python.org  funkload
+</pre></div>
+
+
+<p>还是不行，最后在github上看到一条</p>
+<div class="highlight"><pre><span></span>sudo -H pip install git+https://github.com/nuxeo/FunkLoad.git
+</pre></div>
+
+
+<p>终于成功!</p>
+<p><img alt="2017-12-26-15-34-35" src="http://img.rc5j.cn/2017-12-26-15-34-35.png"></p>
+<h2>使用</h2>
+<p>编写脚本</p>
+<div class="highlight"><pre><span></span><span class="c1"># coding=utf-8</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">from</span> <span class="nn">funkload.FunkLoadTestCase</span> <span class="kn">import</span> <span class="n">FunkLoadTestCase</span>
+
+<span class="k">class</span> <span class="nc">Simple</span><span class="p">(</span><span class="n">FunkLoadTestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This test use a configuration file Simple.conf.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setting up test.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf_get</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;url&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">test_deposit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conf_get</span><span class="p">(</span><span class="s1">&#39;bench&#39;</span><span class="p">,</span><span class="s1">&#39;url&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+          <span class="n">params</span><span class="o">=</span><span class="p">[[</span><span class="s1">&#39;driver_id&#39;</span><span class="p">,</span> <span class="s1">&#39;23&#39;</span><span class="p">],</span>
+                  <span class="p">[</span><span class="s1">&#39;_sign&#39;</span><span class="p">,</span> <span class="s1">&#39;C9F694967B798FD6C70B6F36C182647B&#39;</span><span class="p">]],</span>
+          <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Login as scott&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
+    <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>执行命令</p>
+<div class="highlight"><pre><span></span>fl-run-bench -c <span class="m">400</span> -D <span class="m">10</span> test_deposit.py Simple.test_deposit
+</pre></div>
+
+
+<p>得到结果</p>
+<p><img alt="2017-12-27-11-37-58" src="http://img.rc5j.cn/2017-12-27-11-37-58.png"></p>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=funkload性能测试&amp;url=/funkloadxing-neng-ce-shi.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/funkloadxing-neng-ce-shi.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/funkloadxing-neng-ce-shi.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
