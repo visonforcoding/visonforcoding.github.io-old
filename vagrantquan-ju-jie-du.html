@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>vagrant全局解读</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/vagrantquan-ju-jie-du.html" rel="canonical" />
+
+        <meta name="description" content="利用vagrant 进行本地实验是一个非常好的选择 vagrant box vagrant box 就是系统镜像，可以通过命令行进行安装 vagrant box add USER/BOX 这是从网上的box 云 下载安装，有时候会很慢，可以事先下载到本地再进行安装...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="vagrant全局解读"/>
+<meta property="og:description" content="利用vagrant 进行本地实验是一个非常好的选择 vagrant box vagrant box 就是系统镜像，可以通过命令行进行安装 vagrant box add USER/BOX 这是从网上的box 云 下载安装，有时候会很慢，可以事先下载到本地再进行安装..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/vagrantquan-ju-jie-du.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-12-26 13:45:00+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="其他"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "vagrant全局解读",
+  "headline": "vagrant全局解读",
+  "datePublished": "2017-12-26 13:45:00+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/vagrantquan-ju-jie-du.html",
+  "description": "利用vagrant 进行本地实验是一个非常好的选择 vagrant box vagrant box 就是系统镜像，可以通过命令行进行安装 vagrant box add USER/BOX 这是从网上的box 云 下载安装，有时候会很慢，可以事先下载到本地再进行安装..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">vagrant全局解读</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="二 26 十二月 2017">二 26 十二月 2017</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <blockquote>
+<p>利用vagrant 进行本地实验是一个非常好的选择</p>
+</blockquote>
+<h2>vagrant box</h2>
+<p>vagrant box 就是系统镜像，可以通过命令行进行安装</p>
+<div class="highlight"><pre><span></span>vagrant box add USER/BOX
+</pre></div>
+
+
+<p>这是从网上的box 云 下载安装，有时候会很慢，可以事先下载到本地再进行安装</p>
+<p>这是一个下载链接例子：
+https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.2.6/providers/virtualbox.box</p>
+<p>找到你想下载的box页面地址点击版本后的链接上加上/providers/virtualbox.box就是下载链接了。</p>
+<p>https://atlas.hashicorp.com/bento/boxes/centos-6.7/versions/2.2.7/providers/virtualbox.box</p>
+<h2>多虚拟机配置</h2>
+<div class="highlight"><pre><span></span><span class="no">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">inline</span><span class="p">:</span> <span class="s2">&quot;echo Hello&quot;</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provision</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="ss">path</span><span class="p">:</span> <span class="s2">&quot;scripts/install.sh&quot;</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;web&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">web</span><span class="o">|</span>
+    <span class="n">web</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;centos&quot;</span>
+  <span class="k">end</span>
+
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;db&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">db</span><span class="o">|</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;centos&quot;</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;db_master&quot;</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="s2">&quot;1024&quot;</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">cpus</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+
+
+<h2>安装脚本</h2>
+<div class="highlight"><pre><span></span><span class="c1">#安装必要依赖</span>
+yum install -y gcc
+yum install -y vim
+yum install -y wget
+<span class="c1">#安装几个源</span>
+rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+wget http://www.atomicorp.com/installers/atomic
+chmod +x atomic
+./atomic
+su -c <span class="s1">&#39;rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm&#39;</span>   <span class="c1">#64位</span>
+
+<span class="c1">##设置中文</span>
+<span class="nb">echo</span> <span class="s1">&#39;export LANG=&quot;zh_CN.UTF-8&quot;&#39;</span> &gt;&gt; ~/.bashrc
+</pre></div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=vagrant全局解读&amp;url=/vagrantquan-ju-jie-du.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/vagrantquan-ju-jie-du.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/vagrantquan-ju-jie-du.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
