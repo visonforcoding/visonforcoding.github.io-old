@@ -166,19 +166,39 @@ https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.2.6/providers/vir
 
 
 <h2>安装脚本</h2>
-<div class="highlight"><pre><span></span><span class="c1">#安装必要依赖</span>
-yum install -y gcc
+<div class="highlight"><pre><span></span><span class="c1">##设置中文</span>
+<span class="nb">echo</span> <span class="s1">&#39;export LANG=&quot;zh_CN.UTF-8&quot;&#39;</span> &gt;&gt; ~/.bashrc
+<span class="c1"># 设置中国时区</span>
+<span class="se">\c</span>p /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+<span class="c1">#安装必要依赖</span>
+yum install -y gcc zlib-devel openssl-devel
 yum install -y vim
 yum install -y wget
 <span class="c1">#安装几个源</span>
-rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+<span class="c1"># rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm 已停止服务</span>
 wget http://www.atomicorp.com/installers/atomic
 chmod +x atomic
 ./atomic
 su -c <span class="s1">&#39;rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm&#39;</span>   <span class="c1">#64位</span>
 
-<span class="c1">##设置中文</span>
-<span class="nb">echo</span> <span class="s1">&#39;export LANG=&quot;zh_CN.UTF-8&quot;&#39;</span> &gt;&gt; ~/.bashrc
+rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm <span class="c1">#如需要 手动打开enable</span>
+
+<span class="c1">#安装 php56</span>
+yum --enablerepo<span class="o">=</span>remi install -y php56 php56-php-fpm php56-php-common php56-php-intl php56-php-cli php56-php-mbstring
+
+<span class="c1">#软链php </span>
+ln -s /opt/remi/php56/root/usr/bin/php /usr/local/bin/php
+
+<span class="c1">#安装python</span>
+wget https://www.python.org/ftp/python/2.7.13/Python-2.7.13.tgz
+tar xzf Python-2.7.13.tgz
+<span class="nb">cd</span> Python-2.7.13
+./configure
+make install
+
+<span class="c1">#安装pip</span>
+wget https://bootstrap.pypa.io/get-pip.py
+/usr/local/bin/python2.7 get-pip.py
 </pre></div>
             </section>
 
