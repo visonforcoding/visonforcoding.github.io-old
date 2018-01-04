@@ -174,6 +174,8 @@ https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.2.6/providers/vir
 yum install -y gcc zlib-devel openssl-devel
 yum install -y vim
 yum install -y wget
+yum install -y man
+cp /usr/share/locale/en/LC_MESSAGES/man /usr/share/locale/zh/LC_MESSAGES/
 <span class="c1">#安装几个源</span>
 <span class="c1"># rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm 已停止服务</span>
 wget http://www.atomicorp.com/installers/atomic
