@@ -164,10 +164,12 @@ ps aux | grep php-fpm | awk &#39;{sum+=$6} END {print sum/1024}&#39; ##统计fpm
 </pre></div>
 
 
-<p><strong>释放cache</strong>
-- To free pagecache, use echo 1 &gt; /proc/sys/vm/drop_caches; 
-- tofree dentries and inodes, use echo 2 &gt; /proc/sys/vm/drop_caches;
-- to free pagecache, dentries and inodes, use echo 3 &gt; /proc/sys/vm/drop_caches.</p>
+<p><strong>释放cache</strong></p>
+<ul>
+<li>To free pagecache, use echo 1 &gt; /proc/sys/vm/drop_caches; </li>
+<li>tofree dentries and inodes, use echo 2 &gt; /proc/sys/vm/drop_caches;</li>
+<li>to free pagecache, dentries and inodes, use echo 3 &gt; /proc/sys/vm/drop_caches.</li>
+</ul>
 <h2>测试</h2>
 <p><img alt="2018-01-03-10-27-57" src="http://img.rc5j.cn/2018-01-03-10-27-57.png"></p>
 <p><img alt="2018-01-03-10-41-46" src="http://img.rc5j.cn/2018-01-03-10-41-46.png"></p>
