@@ -38,7 +38,7 @@
 
     <link href="/php-mongodbtuo-zhan-shi-yong.html" rel="canonical" />
 
-        <meta name="description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new...">
+        <meta name="description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 <?php $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date...">
 
         <meta name="author" content="visonforcoding">
 
@@ -49,7 +49,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="麦田麦穗"/>
 <meta property="og:title" content="php-mongodb拓展使用"/>
-<meta property="og:description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new..."/>
+<meta property="og:description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 <?php $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date..."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/php-mongodbtuo-zhan-shi-yong.html"/>
 <meta property="og:type" content="article"/>
@@ -76,7 +76,7 @@
   },
   "image": "/theme/images/post-bg.jpg",
   "url": "/php-mongodbtuo-zhan-shi-yong.html",
-  "description": "php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new..."
+  "description": "php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 <?php $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date..."
 }
 </script>
 </head>
@@ -132,25 +132,22 @@
                 <blockquote>
 <p>php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展</p>
 </blockquote>
-<div class="highlight"><pre><span></span><span class="x">        $dsn = &quot;mongodb://localhost:27017&quot;;</span>
-<span class="x">        $m = new MongoDB\Driver\Manager($dsn); // 连接</span>
-<span class="x">        $start_date = new MongoDB\BSON\UTCDateTime(new DateTime(&#39;-1 hour&#39;));</span>
-<span class="x">        $end_date = new MongoDB\BSON\UTCDateTime(new DateTime(&#39;-1 seconds&#39;));</span>
-<span class="x">        $filter = [&#39;ctime&#39; =&gt; [&#39;$gt&#39; =&gt; $start_date, &#39;$lte&#39; =&gt; $end_date]];</span>
-<span class="x">        $options = [</span>
-<span class="x">            &#39;projection&#39; =&gt; [&#39;_id&#39; =&gt; 0],</span>
-<span class="x">            &#39;sort&#39; =&gt; [&#39;ctime&#39; =&gt; 1],</span>
-<span class="x">        ];</span>
-<span class="x">        $query = new MongoDB\Driver\Query($filter, $options);</span>
-<span class="x">        $cursor = $m-&gt;executeQuery(&#39;data_test.memory_log&#39;, $query);</span>
-<span class="x">        $points = [];</span>
-<span class="x">        foreach ($cursor as $document) {</span>
-<span class="x">            $points[] = $document;</span>
-<span class="x">        }</span>
-</pre></div>
-
-
-<div class="highlight"><pre><span></span><span class="x">   echo &#39;hello,world&#39;;</span>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+    <span class="nv">$dsn</span> <span class="o">=</span> <span class="s2">&quot;mongodb://localhost:27017&quot;</span><span class="p">;</span>
+    <span class="nv">$m</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Manager</span><span class="p">(</span><span class="nv">$dsn</span><span class="p">);</span> <span class="c1">// 连接</span>
+    <span class="nv">$start_date</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\BSON\UTCDateTime</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;-1 hour&#39;</span><span class="p">));</span>
+    <span class="nv">$end_date</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\BSON\UTCDateTime</span><span class="p">(</span><span class="k">new</span> <span class="nx">DateTime</span><span class="p">(</span><span class="s1">&#39;-1 seconds&#39;</span><span class="p">));</span>
+    <span class="nv">$filter</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ctime&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;$gt&#39;</span> <span class="o">=&gt;</span> <span class="nv">$start_date</span><span class="p">,</span> <span class="s1">&#39;$lte&#39;</span> <span class="o">=&gt;</span> <span class="nv">$end_date</span><span class="p">]];</span>
+    <span class="nv">$options</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;projection&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;_id&#39;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">],</span>
+            <span class="s1">&#39;sort&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="s1">&#39;ctime&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">];</span>
+    <span class="nv">$query</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MongoDB\Driver\Query</span><span class="p">(</span><span class="nv">$filter</span><span class="p">,</span> <span class="nv">$options</span><span class="p">);</span>
+    <span class="nv">$cursor</span> <span class="o">=</span> <span class="nv">$m</span><span class="o">-&gt;</span><span class="na">executeQuery</span><span class="p">(</span><span class="s1">&#39;data_test.memory_log&#39;</span><span class="p">,</span> <span class="nv">$query</span><span class="p">);</span>
+        <span class="nv">$points</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nv">$cursor</span> <span class="k">as</span> <span class="nv">$document</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$points</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$document</span><span class="p">;</span>
+        <span class="p">}</span>
 </pre></div>
             </section>
 
