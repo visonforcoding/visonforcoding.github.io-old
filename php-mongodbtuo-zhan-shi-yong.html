@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>php-mongodb拓展使用</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/php-mongodbtuo-zhan-shi-yong.html" rel="canonical" />
+
+        <meta name="description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="php-mongodb拓展使用"/>
+<meta property="og:description" content="php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/php-mongodbtuo-zhan-shi-yong.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-01-05 11:17:07+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="php"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "php-mongodb拓展使用",
+  "headline": "php-mongodb拓展使用",
+  "datePublished": "2018-01-05 11:17:07+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/php-mongodbtuo-zhan-shi-yong.html",
+  "description": "php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展 $dsn = "mongodb://localhost:27017"; $m = new MongoDB\Driver\Manager($dsn); // 连接 $start_date = new..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">php-mongodb拓展使用</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="五 05 一月 2018">五 05 一月 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <blockquote>
+<p>php-mongo 其实是一个老的拓展，可能会被废弃，建议大家使用新的拓展</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="x">        $dsn = &quot;mongodb://localhost:27017&quot;;</span>
+<span class="x">        $m = new MongoDB\Driver\Manager($dsn); // 连接</span>
+<span class="x">        $start_date = new MongoDB\BSON\UTCDateTime(new DateTime(&#39;-1 hour&#39;));</span>
+<span class="x">        $end_date = new MongoDB\BSON\UTCDateTime(new DateTime(&#39;-1 seconds&#39;));</span>
+<span class="x">        $filter = [&#39;ctime&#39; =&gt; [&#39;$gt&#39; =&gt; $start_date, &#39;$lte&#39; =&gt; $end_date]];</span>
+<span class="x">        $options = [</span>
+<span class="x">            &#39;projection&#39; =&gt; [&#39;_id&#39; =&gt; 0],</span>
+<span class="x">            &#39;sort&#39; =&gt; [&#39;ctime&#39; =&gt; 1],</span>
+<span class="x">        ];</span>
+<span class="x">        $query = new MongoDB\Driver\Query($filter, $options);</span>
+<span class="x">        $cursor = $m-&gt;executeQuery(&#39;data_test.memory_log&#39;, $query);</span>
+<span class="x">        $points = [];</span>
+<span class="x">        foreach ($cursor as $document) {</span>
+<span class="x">            $points[] = $document;</span>
+<span class="x">        }</span>
+</pre></div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=php-mongodb拓展使用&amp;url=/php-mongodbtuo-zhan-shi-yong.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/php-mongodbtuo-zhan-shi-yong.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/php-mongodbtuo-zhan-shi-yong.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
