@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+
+  <title>后端开发使用webpack</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+      <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">
+
+
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+
+    <link href="/hou-duan-kai-fa-shi-yong-webpack.html" rel="canonical" />
+
+        <meta name="description" content="前端技术发展之快，与我这个后端开发都产生代沟了，感觉最近才弄懂这个东西的用处 前言 在了解webpack之前一定要弄懂为什么要用webpack? 为了解答这个为什么,就需要了解es6的module。 建议阅读《阮一峰的es6入门》 安装 mkdir...">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="后端开发使用webpack"/>
+<meta property="og:description" content="前端技术发展之快，与我这个后端开发都产生代沟了，感觉最近才弄懂这个东西的用处 前言 在了解webpack之前一定要弄懂为什么要用webpack? 为了解答这个为什么,就需要了解es6的module。 建议阅读《阮一峰的es6入门》 安装 mkdir..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/hou-duan-kai-fa-shi-yong-webpack.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-01-11 14:45:09+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="前端"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "后端开发使用webpack",
+  "headline": "后端开发使用webpack",
+  "datePublished": "2018-01-11 14:45:09+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/hou-duan-kai-fa-shi-yong-webpack.html",
+  "description": "前端技术发展之快，与我这个后端开发都产生代沟了，感觉最近才弄懂这个东西的用处 前言 在了解webpack之前一定要弄懂为什么要用webpack? 为了解答这个为什么,就需要了解es6的module。 建议阅读《阮一峰的es6入门》 安装 mkdir..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+
+
+    </ul>
+  </div>
+</nav>
+    <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">后端开发使用webpack</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="四 11 一月 2018">四 11 一月 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <blockquote>
+<p>前端技术发展之快，与我这个后端开发都产生代沟了，感觉最近才弄懂这个东西的用处</p>
+</blockquote>
+<h2>前言</h2>
+<p><img alt="2018-01-11-14-52-24" src="http://img.rc5j.cn/2018-01-11-14-52-24.png"></p>
+<p>在了解webpack之前一定要弄懂为什么要用webpack? 为了解答这个为什么,就需要了解es6的module。
+建议阅读<a href="http://es6.ruanyifeng.com/#docs/module">《阮一峰的es6入门》</a></p>
+<h2>安装</h2>
+<div class="highlight"><pre><span></span>mkdir webpack-demo <span class="o">&amp;&amp;</span> <span class="nb">cd</span> webpack-demo
+cnpm init -y
+cnpm install --save-dev webpack
+</pre></div>
+
+
+<p>官方推荐本地安装而非全局安装以免造成一些版本兼容带来的困扰，我这里使用cnpm淘宝npm镜像。</p>
+<h2>使用</h2>
+<p>按照官方首页最简单的例子</p>
+<p><img alt="2018-01-11-14-58-18" src="http://img.rc5j.cn/2018-01-11-14-58-18.png"></p>
+<p>我稍稍做了一些改动。</p>
+<div class="highlight"><pre><span></span><span class="c1">//app.js</span>
+<span class="kr">import</span> <span class="nx">bar</span> <span class="nx">from</span> <span class="s1">&#39;./bar&#39;</span><span class="p">;</span>
+
+<span class="nx">bar</span><span class="p">();</span>
+</pre></div>
+
+
+<p>在bar.js 中console.log 出了一串信息</p>
+<div class="highlight"><pre><span></span><span class="c1">//bar.js</span>
+<span class="kr">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">bar</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;this function has been imported!&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>我将page.html 命名成index.html</p>
+<div class="highlight"><pre><span></span><span class="c">&lt;!-- index.html --&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>webpack<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>hello,webpack<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;bundle.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="c1">//webpack.config.js</span>
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">entry</span><span class="o">:</span> <span class="s1">&#39;./app.js&#39;</span><span class="p">,</span>
+    <span class="nx">output</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">filename</span><span class="o">:</span> <span class="s1">&#39;bundle.js&#39;</span>
+    <span class="p">},</span>
+    <span class="c1">// devServer: {</span>
+    <span class="c1">//     // contentBase: &#39;./dist&#39;</span>
+    <span class="c1">// },</span>
+
+<span class="p">};</span>
+</pre></div>
+
+
+<h2>运行</h2>
+<p>运用webpack的dev-server可以搭建一个web环境并且可以监听到更改自动运行webpack命令进行构建</p>
+<div class="highlight"><pre><span></span>cnpm install --save-dev webpack-dev-server  <span class="c1">#安装</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>node_modules/.bin/webpack-dev-server #运行dev-server
+</pre></div>
+
+
+<p><img alt="2018-01-11-15-08-29" src="http://img.rc5j.cn/2018-01-11-15-08-29.png"></p>
+<p>可以看到webpck-dev-server做了几件事情！</p>
+<p>1.自动编译了项目</p>
+<p>2.在localhost:8080搭建了一个web服务器，通过这个地址可以访问你的项目</p>
+<p><img alt="2018-01-11-15-10-34" src="http://img.rc5j.cn/2018-01-11-15-10-34.png"></p>
+<p>访问地址http://localhost:8080可以看得到结果。</p>
+<h2>后记</h2>
+<p>在我看来webpack提供了几大便利</p>
+<ul>
+<li>为利用es6 module特性进行开发提供了良好的工具，大大的提高了开发效率</li>
+<li>帮前端开发搭建了一个webserver,构建了一个比较舒适的开发环境</li>
+<li>热更新机制减去了每次手动编译的麻烦</li>
+</ul>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=后端开发使用webpack&amp;url=/hou-duan-kai-fa-shi-yong-webpack.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/hou-duan-kai-fa-shi-yong-webpack.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/hou-duan-kai-fa-shi-yong-webpack.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+      <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+
+         
+  
+          <span class="credits-theme">Theme <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>
+
+</body>
+</html>
