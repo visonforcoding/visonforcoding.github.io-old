@@ -19,7 +19,7 @@
   <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
 
   <!-- Code highlight color scheme -->
-  <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">  
+  <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">    <link href="personal.css" type="text/css" rel="stylesheet">
   <!-- Custom fonts -->
   <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
@@ -30,9 +30,7 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <link rel="icon" href="images/favicon.ico" type="image/x-icon" /> 
- 
-
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />  
 
     <link href="/helloworld.html" rel="canonical" />
 
@@ -47,7 +45,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="麦田麦穗"/>
 <meta property="og:title" content="Hello,world"/>
-<meta property="og:description" content="print 'hello,world'"/>
+<meta property="og:description" content="print 'hello,world' <?php echo 'hello,world';"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="/helloworld.html"/>
 <meta property="og:type" content="article"/>
@@ -74,7 +72,7 @@
   },
   "image": "/theme/images/post-bg.jpg",
   "url": "/helloworld.html",
-  "description": "print 'hello,world'"
+  "description": "print 'hello,world' <?php echo 'hello,world';"
 }
 </script>
 </head>
@@ -136,6 +134,11 @@
         <div class="inner">
             <section class="post-content">
                 <div class="highlight"><pre><span></span><span class="k">print</span> <span class="s1">&#39;hello,world&#39;</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+   <span class="k">echo</span> <span class="s1">&#39;hello,world&#39;</span><span class="p">;</span>
 </pre></div>
             </section>
 
@@ -203,8 +206,7 @@ s.setAttribute('data-timestamp', +new Date());
     </footer>
   </section>
 
-  <script type="text/javascript" src="/theme/js/script.js"></script>  
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1272387531'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272387531%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  <script type="text/javascript" src="/theme/js/script.js"></script>  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1272387531'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272387531%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 
 </html>
