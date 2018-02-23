@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+      <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
+  <title>php多进程并发编程</title>
+
+
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="origin" />
+  <meta name="generator" content="Pelican" />
+  <link href="/" rel="canonical" />
+
+  <!-- Feed -->
+         
+  <link href="/theme/css/style.css" type="text/css" rel="stylesheet" />
+
+  <!-- Code highlight color scheme -->
+  <link href="/theme/css/code_blocks/monokai.css" rel="stylesheet">    <link href="/theme/css/personal.css" type="text/css" rel="stylesheet">
+  <!-- Custom fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Montserrat:400,300' rel='stylesheet' type='text/css' />
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" />
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />  
+
+    <link href="/phpduo-jin-cheng-bing-fa-bian-cheng.html" rel="canonical" />
+        <meta name="keywords" content="php多进程 pcntl" >
+
+        <meta name="description" content="php多进程并发编程">
+
+        <meta name="author" content="visonforcoding">
+
+
+
+
+
+<!-- Open Graph -->
+<meta property="og:site_name" content="麦田麦穗"/>
+<meta property="og:title" content="php多进程并发编程"/>
+<meta property="og:description" content="PHP从一出生就被设计用来快速开发WEB应用，这也注定了它在某些方面的先天不足，例如在cli环境下处理大量数据的情况，或者在并发编程方面，都显得力不从心。但基于LINUX的PHP扩展PCNTL却可以提供多进程编程。 fork..."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="/phpduo-jin-cheng-bing-fa-bian-cheng.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-02-02 09:59:16+08:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="/author/visonforcoding.html">
+<meta property="article:section" content="php"/>
+<meta property="og:image" content="/theme/images/post-bg.jpg">
+
+<!-- Twitter Card -->
+
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "name": "php多进程并发编程",
+  "headline": "php多进程并发编程",
+  "datePublished": "2018-02-02 09:59:16+08:00",
+  "dateModified": "",
+  "author": {
+    "@type": "Person",
+    "name": "visonforcoding",
+    "url": "/author/visonforcoding.html"
+  },
+  "image": "/theme/images/post-bg.jpg",
+  "url": "/phpduo-jin-cheng-bing-fa-bian-cheng.html",
+  "description": "PHP从一出生就被设计用来快速开发WEB应用，这也注定了它在某些方面的先天不足，例如在cli环境下处理大量数据的情况，或者在并发编程方面，都显得力不从心。但基于LINUX的PHP扩展PCNTL却可以提供多进程编程。 fork..."
+}
+</script>
+</head>
+<!-- TODO : Body class -->
+
+<body class="home-template">
+
+<nav id="menu">
+  <a class="close-button">Close</a>
+  <div class="nav-wrapper">
+    <p class="nav-label">Menu</p>
+    <ul>
+          <li><a href="/wo.html" role="presentation">关于我</a></li>
+
+                  <li role="presentation"><a href="/category/fang-an.html">方案</a></li>
+                  <li role="presentation"><a href="/category/linux.html">linux</a></li>
+                  <li class="nav-php active" role="presentation"><a href="/category/php.html">php</a></li>
+                  <li role="presentation"><a href="/category/python.html">python</a></li>
+                  <li role="presentation"><a href="/category/qi-ta.html">其他</a></li>
+                  <li role="presentation"><a href="/category/qian-duan.html">前端</a></li>
+                  <li role="presentation"><a href="/category/she-ying.html">摄影</a></li>
+
+    </ul>
+  </div>
+</nav>     <!-- Progressbar -->
+    <div class="progress-container">
+        <span class="progress-bar"></span>
+    </div>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <header id="post-header" class="has-cover">
+      <div class="inner">
+        <nav id="navigation">
+            <span id="home-button" class="nav-button">
+                <a class="home-button" href="/" title="Home"><i class="ic ic-arrow-left"></i> Home</a>
+            </span>
+          <span id="menu-button" class="nav-button">
+            <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
+          </span>
+        </nav>
+        <h1 class="post-title">php多进程并发编程</h1>
+        <!-- TODO : Proper class for headline -->
+        <span class="post-meta">
+                <a href="/author/visonforcoding.html">Visonforcoding</a>
+            | <time datetime="五 02 二月 2018">五 02 二月 2018</time>
+        </span>
+        <!-- TODO : Modified check -->
+            <div class="post-cover cover" style="background-image: url('/theme/images/post-bg.jpg')">
+      </div>
+    </header>
+
+  <section id="wrapper">
+    <a class="hidden-close"></a>
+
+    <!-- Post content -->
+    <main class="content" role="main">
+        <article class="post">
+        <div class="inner">
+            <section class="post-content">
+                <blockquote>
+<p>PHP从一出生就被设计用来快速开发WEB应用，这也注定了它在某些方面的先天不足，例如在cli环境下处理大量数据的情况，或者在并发编程方面，都显得力不从心。但基于LINUX的PHP扩展PCNTL却可以提供多进程编程。</p>
+</blockquote>
+<h2>fork</h2>
+<p>FORK编程的大概原理是，每次调用fork函数，操作系统就会产生一个子进程，<strong>儿子进程所有的堆栈信息都是原封不动复制父进程的</strong>，而在fork之后，父进程与子进程实际上是相互独立的，父子进程不会相互影响。也就是说，fork调用位置之前的所有变量，父进程和子进程是一样的，但fork之后则取决于各自的动作，且数据也是独立的；</p>
+<h1>例子</h1>
+<div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">class</span> <span class="nc">Process</span>
+<span class="p">{</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * 创建多进程任务</span>
+<span class="sd">     * @param callable $fn  子进程执行方法</span>
+<span class="sd">     * @param mixed $param  参数列表</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">fork</span><span class="p">(</span><span class="nx">callable</span> <span class="nv">$fn</span><span class="p">,</span> <span class="o">...</span><span class="nv">$param</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$pid</span> <span class="o">=</span> <span class="nb">pcntl_fork</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$pid</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//创建子进程失败</span>
+            <span class="k">die</span><span class="p">(</span><span class="s1">&#39;创建子进程失败&#39;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$pid</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//父进程的到子进程号 父进程逻辑</span>
+            <span class="nx">println</span><span class="p">(</span><span class="nx">ColorOut</span><span class="o">::</span><span class="na">red</span><span class="p">(</span><span class="s1">&#39;创建子进程:&#39;</span> <span class="o">.</span> <span class="nv">$pid</span><span class="p">));</span>
+                <span class="c1">//          pcntl_wait($status); //等待子进程中断，防止子进程成为僵尸进程。</span>
+                <span class="c1">//          self::waitChildCompleted();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">//子进程逻辑</span>
+            <span class="nb">call_user_func_array</span><span class="p">(</span><span class="nv">$fn</span><span class="p">,</span> <span class="nv">$param</span><span class="p">);</span>
+            <span class="k">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">waitChildCompleted</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">while</span> <span class="p">((</span><span class="nv">$pid</span> <span class="o">=</span> <span class="nb">pcntl_waitpid</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nv">$status</span><span class="p">))</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$status</span> <span class="o">=</span> <span class="nb">pcntl_wexitstatus</span><span class="p">(</span><span class="nv">$status</span><span class="p">);</span>
+            <span class="nx">println</span><span class="p">(</span><span class="nx">ColorOut</span><span class="o">::</span><span class="na">red</span><span class="p">(</span><span class="s2">&quot;子进程</span><span class="si">$pid</span><span class="s2"> 完成 状态 </span><span class="si">$status</span><span class="s2">&quot;</span><span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+            </section>
+
+            <section class="post-info">
+                <div class="post-share">
+                    <a class="twitter" href="https://twitter.com/share?text=php多进程并发编程&amp;url=/phpduo-jin-cheng-bing-fa-bian-cheng.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
+                    </a>
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/phpduo-jin-cheng-bing-fa-bian-cheng.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
+                    </a>
+                    <a class="googleplus" href="https://plus.google.com/share?url=/phpduo-jin-cheng-bing-fa-bian-cheng.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
+                    </a>
+                    <div class="clear"></div>
+                </div>
+
+
+                <div class="clear"></div>
+
+
+                </section>
+
+
+                <aside class="post-nav">
+                    <div class="clear"></div>
+                </aside>
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var disqus_shortname = 'visonforcoding-github-io';
+var d = document, s = d.createElement('script');
+s.src = 'https://'+disqus_shortname+'.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            </div>
+        </article>
+    </main>
+    <!-- TODO : Body class -->
+    <div id="body-class" style="display: none;" class=""></div>
+
+    <footer id="footer">
+      <div class="inner">
+        <section class="credits">
+      
+          <span class="credits-theme">Theme
+          <a href="https://github.com/arulrajnet/attila" rel="nofollow">Attila</a></span>
+          <span class="credits-software">Published with
+          <a href="https://github.com/getpelican/pelican" rel="nofollow">Pelican</a></span>
+        </section>
+      </div>
+    </footer>
+  </section>
+
+  <script type="text/javascript" src="/theme/js/script.js"></script>  <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none' id='cnzz_stat_icon_1272387531'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272387531%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+</body>
+
+</html>
