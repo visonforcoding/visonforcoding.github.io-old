@@ -52,7 +52,7 @@
 <meta property="article:published_time" content="2017-12-26 13:45:00+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="/author/visonforcoding.html">
-<meta property="article:section" content="其他"/>
+<meta property="article:section" content="python"/>
 <meta property="og:image" content="/theme/images/post-bg.jpg">
 
 <!-- Twitter Card -->
@@ -91,8 +91,8 @@
                   <li role="presentation"><a href="/category/java.html">java</a></li>
                   <li role="presentation"><a href="/category/linux.html">linux</a></li>
                   <li role="presentation"><a href="/category/php.html">php</a></li>
-                  <li role="presentation"><a href="/category/python.html">python</a></li>
-                  <li class="nav-qi-ta active" role="presentation"><a href="/category/qi-ta.html">其他</a></li>
+                  <li class="nav-python active" role="presentation"><a href="/category/python.html">python</a></li>
+                  <li role="presentation"><a href="/category/qi-ta.html">其他</a></li>
                   <li role="presentation"><a href="/category/qian-duan.html">前端</a></li>
                   <li role="presentation"><a href="/category/ruan-jian.html">软件</a></li>
                   <li role="presentation"><a href="/category/she-ying.html">摄影</a></li>
@@ -176,6 +176,45 @@
           <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Login as scott&quot;</span><span class="p">)</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">,</span> <span class="s1">&#39;__main__&#39;</span><span class="p">):</span>
     <span class="n">unittest</span><span class="o">.</span><span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+
+<p>配置文件</p>
+<div class="highlight"><pre><span></span># main section for the test case
+[main]
+title=Simple FunkLoad tests
+description=Simply testing a default static page
+url=http://nofwork.dev/
+
+# a section for each test
+[test_simple]
+description=Access the main URL %(nb_time)s times
+
+nb_time=20
+
+# &lt;&lt;snip&gt;&gt;
+# a section to configure the test mode
+[ftest]
+log_to = console file
+log_path = simple-test.log
+result_path = simple-test.xml
+sleep_time_min = 0
+sleep_time_max = 0
+
+# a section to configure the bench mode
+[bench]
+url =  xxx.abc.com
+index_url = xxx.abc.com/foo/bar
+cycles = 50:75:100:125  ##并发数 50 75 100 125
+duration = 10   ##持续时间
+startup_delay = 0.01
+sleep_time = 0.01
+cycle_time = 1
+log_to =
+log_path = simple-bench.log
+result_path = simple-bench.xml
+sleep_time_min = 0
+sleep_time_max = 0.5
 </pre></div>
 
 
