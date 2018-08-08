@@ -201,6 +201,14 @@
 <td>start</td>
 <td>启动服务</td>
 </tr>
+<tr>
+<td>stop</td>
+<td>停止服务</td>
+</tr>
+<tr>
+<td>restart</td>
+<td>重启服务</td>
+</tr>
 </tbody>
 </table>
 <p><strong>第一次使用up,之后使用start,如果再次使用up将会重新创建容器，一些对容器的修改将会丢失</strong></p>
@@ -213,6 +221,28 @@
 <p>进入容器后会发现只能用少量命令，连ps等都没有，这个时候需要安装一些程序</p>
 <div class="highlight"><pre><span></span>apt-get update  <span class="c1">##更新元</span>
 apt-get install procps  <span class="c1">## 安装 ps</span>
+</pre></div>
+
+
+<p>安装php-rdkafka拓展</p>
+<div class="highlight"><pre><span></span>apt-get install wget
+wget https://github.com/edenhill/librdkafka/archive/master.zip
+
+apt-get install unzip
+
+unzip master.zip
+
+<span class="nb">cd</span> librdkafka
+
+./configure 
+
+make
+
+make install 
+
+pecl install http://pecl.php.net/get/rdkafka-3.0.4.tgz
+
+<span class="c1">#在php.ini 配置启用 rdkafka拓展</span>
 </pre></div>
             </section>
 
