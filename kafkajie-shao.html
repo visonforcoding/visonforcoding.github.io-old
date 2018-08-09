@@ -5,7 +5,7 @@
       <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> 
-  <title>php+kafka使用</title>
+  <title>kafka介绍</title>
 
 
   <meta name="HandheldFriendly" content="True" />
@@ -32,10 +32,10 @@
   <![endif]-->
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />  
 
-    <link href="/phpkafkashi-yong.html" rel="canonical" />
-        <meta name="keywords" content="php,kafka,消息队列" >
+    <link href="/kafkajie-shao.html" rel="canonical" />
+        <meta name="keywords" content="kafka,消息队列" >
 
-        <meta name="description" content="php+kafka使用">
+        <meta name="description" content="kafka介绍">
 
         <meta name="author" content="visonforcoding">
 
@@ -45,12 +45,12 @@
 
 <!-- Open Graph -->
 <meta property="og:site_name" content="麦田麦穗"/>
-<meta property="og:title" content="php+kafka使用"/>
-<meta property="og:description" content="在之前的文章介绍了,消息队列应用场景，也单独介绍了kafka现在介绍下在php中如何使用kafka 安装php-rdkafka拓展 以ubuntu 为例 ## 1.安装librdkafka apt-get install wget wget..."/>
+<meta property="og:title" content="kafka介绍"/>
+<meta property="og:description" content="在一上篇文章介绍了消息队列的使用场景，现在介绍下kafka kafka Kafka主要特点： 同时为发布和订阅提供高吞吐量。据了解，Kafka每秒可以生产约25万消息（50 MB），每秒处理55万消息（110 MB）。..."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="/phpkafkashi-yong.html"/>
+<meta property="og:url" content="/kafkajie-shao.html"/>
 <meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2018-08-09 11:33:06+08:00"/>
+<meta property="article:published_time" content="2018-08-09 11:08:45+08:00"/>
 <meta property="article:modified_time" content=""/>
 <meta property="article:author" content="/author/visonforcoding.html">
 <meta property="article:section" content="数据"/>
@@ -62,9 +62,9 @@
 {
   "@context": "http://schema.org",
   "@type": "Article",
-  "name": "php+kafka使用",
-  "headline": "php+kafka使用",
-  "datePublished": "2018-08-09 11:33:06+08:00",
+  "name": "kafka介绍",
+  "headline": "kafka介绍",
+  "datePublished": "2018-08-09 11:08:45+08:00",
   "dateModified": "",
   "author": {
     "@type": "Person",
@@ -72,8 +72,8 @@
     "url": "/author/visonforcoding.html"
   },
   "image": "/theme/images/post-bg.jpg",
-  "url": "/phpkafkashi-yong.html",
-  "description": "在之前的文章介绍了,消息队列应用场景，也单独介绍了kafka现在介绍下在php中如何使用kafka 安装php-rdkafka拓展 以ubuntu 为例 ## 1.安装librdkafka apt-get install wget wget..."
+  "url": "/kafkajie-shao.html",
+  "description": "在一上篇文章介绍了消息队列的使用场景，现在介绍下kafka kafka Kafka主要特点： 同时为发布和订阅提供高吞吐量。据了解，Kafka每秒可以生产约25万消息（50 MB），每秒处理55万消息（110 MB）。..."
 }
 </script>
 </head>
@@ -118,7 +118,7 @@
             <a class="menu-button"><i class="ic ic-menu"></i> Menu</a>
           </span>
         </nav>
-        <h1 class="post-title">php+kafka使用</h1>
+        <h1 class="post-title">kafka介绍</h1>
         <!-- TODO : Proper class for headline -->
         <span class="post-meta">
                 <a href="/author/visonforcoding.html">Visonforcoding</a>
@@ -138,42 +138,101 @@
         <div class="inner">
             <section class="post-content">
                 <blockquote>
-<p>在之前的文章介绍了,消息队列应用场景，也单独介绍了kafka现在介绍下在php中如何使用kafka</p>
+<p>在一上篇文章介绍了消息队列的使用场景，现在介绍下kafka</p>
 </blockquote>
-<h2>安装php-rdkafka拓展</h2>
-<p>以ubuntu 为例</p>
-<div class="highlight"><pre><span></span><span class="c1">## 1.安装librdkafka</span>
-apt-get install wget
-wget https://github.com/edenhill/librdkafka/archive/master.zip
-
-apt-get install unzip
-
-unzip master.zip
-
-<span class="nb">cd</span> librdkafka
-
-./configure 
-
-make
-
-make install 
-
-<span class="c1">## 2.安装rdkafka拓展</span>
-pecl install http://pecl.php.net/get/rdkafka-3.0.4.tgz
-
-<span class="c1">#在php.ini 配置启用 rdkafka拓展</span>
-</pre></div>
+<h2>kafka</h2>
+<h3>Kafka主要特点：</h3>
+<ul>
+<li>
+<p>同时为发布和订阅提供高吞吐量。据了解，Kafka每秒可以生产约25万消息（50 MB），每秒处理55万消息（110 MB）。</p>
+</li>
+<li>
+<p>可进行持久化操作。将消息持久化到磁盘，因此可用于批量消费，例如ETL，以及实时应用程序。通过将数据持久化到硬盘以及replication防止数据丢失。</p>
+</li>
+<li>
+<p>分布式系统，易于向外扩展。所有的producer、broker和consumer都会有多个，均为分布式的。无需停机即可扩展机器。</p>
+</li>
+<li>
+<p>消息被处理的状态是在consumer端维护，而不是由server端维护。当失败时能自动平衡。</p>
+</li>
+<li>
+<p>支持online和offline的场景。</p>
+</li>
+</ul>
+<h3>kafka 架构</h3>
+<p><img alt="2018-08-09-11-16-19" src="http://img.rc5j.cn/2018-08-09-11-16-19.png"></p>
+<p>Kafka的整体架构非常简单，是显式分布式架构，producer、broker（kafka）和consumer都可以有多个。Producer，consumer实现Kafka注册的接口，数据从producer发送到broker，broker承担一个中间缓存和分发的作用。broker分发注册到系统中的consumer。broker的作用类似于缓存，即活跃的数据和离线处理系统之间的缓存。客户端和服务器端的通信，是基于简单，高性能，且与编程语言无关的TCP协议。</p>
+<p><strong>几个基本概念</strong>：</p>
+<ul>
+<li>
+<p>Topic：特指Kafka处理的消息源（feeds of messages）的不同分类。</p>
+</li>
+<li>
+<p>Partition：Topic物理上的分组，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。</p>
+</li>
+<li>
+<p>Message：消息，是通信的基本单位，每个producer可以向一个topic（主题）发布一些消息。</p>
+</li>
+<li>
+<p>Producers：消息和数据生产者，向Kafka的一个topic发布消息的过程叫做producers。</p>
+</li>
+<li>
+<p>Consumers：消息和数据消费者，订阅topics并处理其发布的消息的过程叫做consumers。</p>
+</li>
+<li>
+<p>Broker：缓存代理，Kafka集群中的一台或多台服务器统称为broker。</p>
+</li>
+</ul>
+<h3>消息发送流程</h3>
+<p><img alt="2018-08-09-11-21-17" src="http://img.rc5j.cn/2018-08-09-11-21-17.png"></p>
+<p>1.Producer根据指定的partition方法（round-robin、hash等），将消息发布到指定topic的partition里面</p>
+<p>2.kafka集群接收到Producer发过来的消息后，将其持久化到硬盘，并保留消息指定时长（可配置），而不关注消息是否被消费。</p>
+<p>3.Consumer从kafka集群pull数据，并控制获取消息的offset</p>
+<p><strong>消息存储策略</strong></p>
+<p><img alt="2018-08-09-11-25-33" src="http://img.rc5j.cn/2018-08-09-11-25-33.png"></p>
+<p>谈到kafka的存储，就不得不提到分区，即partitions，创建一个topic时，同时可以指定分区数目，分区数越多，其吞吐量也越大，但是需要的资源也越多，同时也会导致更高的不可用性，kafka在接收到生产者发送的消息之后，会根据均衡策略将消息存储到不同的分区中。</p>
+<p><img alt="2018-08-09-11-27-49" src="http://img.rc5j.cn/2018-08-09-11-27-49.png"></p>
+<p>在每个分区中，消息以顺序存储，最晚接收的的消息会最后被消费。</p>
+<p><strong>与生产者的交互</strong></p>
+<p><img alt="2018-08-09-11-28-42" src="http://img.rc5j.cn/2018-08-09-11-28-42.png"></p>
+<ul>
+<li>
+<p>生产者在向kafka集群发送消息的时候，可以通过指定分区来发送到指定的分区中</p>
+</li>
+<li>
+<p>也可以通过指定均衡策略来将消息发送到不同的分区中</p>
+</li>
+<li>
+<p>如果不指定，就会采用默认的随机均衡策略，将消息随机的存储到不同的分区中</p>
+</li>
+</ul>
+<p><strong>与消费者的交互</strong></p>
+<p><img alt="2018-08-09-11-30-06" src="http://img.rc5j.cn/2018-08-09-11-30-06.png"></p>
+<ul>
+<li>
+<p>在消费者消费消息时，kafka使用offset来记录当前消费的位置</p>
+</li>
+<li>
+<p>在kafka的设计中，可以有多个不同的group来同时消费同一个topic下的消息，如图，我们有两个不同的group同时消费，他们的的消费的记录位置offset不互相干扰。</p>
+</li>
+<li>
+<p>对于一个group而言，消费者的数量不应该多余分区的数量，因为在一个group中，每个分区至多只能绑定到一个消费者上，即一个消费者可以消费多个分区，一个分区只能给一个消费者消费</p>
+</li>
+<li>
+<p>若一个group中的消费者数量大于分区数量的话，多余的消费者将不会收到任何消息。</p>
+</li>
+</ul>
             </section>
 
             <section class="post-info">
                 <div class="post-share">
-                    <a class="twitter" href="https://twitter.com/share?text=php+kafka使用&amp;url=/phpkafkashi-yong.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <a class="twitter" href="https://twitter.com/share?text=kafka介绍&amp;url=/kafkajie-shao.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
                     <i class="ic ic-twitter"></i><span class="hidden">Twitter</span>
                     </a>
-                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/phpkafkashi-yong.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=/kafkajie-shao.html" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
                     <i class="ic ic-facebook"></i><span class="hidden">Facebook</span>
                     </a>
-                    <a class="googleplus" href="https://plus.google.com/share?url=/phpkafkashi-yong.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <a class="googleplus" href="https://plus.google.com/share?url=/kafkajie-shao.html" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
                     <i class="ic ic-googleplus"></i><span class="hidden">Google+</span>
                     </a>
                     <div class="clear"></div>
